@@ -157,7 +157,7 @@ export default function App() {
   };
 
   return (
-    <div className="bg-[#070b19] text-blue-50 min-h-screen flex flex-col font-['Prompt'] selection:bg-cyan-500 selection:text-black">
+    <div className="bg-[#070b19] text-blue-50 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
       
       {/* Navbar */}
       <nav className="sticky top-0 z-50 bg-[#0a1128]/90 backdrop-blur-md border-b border-blue-900/40">
@@ -186,8 +186,11 @@ export default function App() {
               <span className="text-xs text-blue-300 mr-1">ยอดเงิน:</span>
               <span className="font-bold text-cyan-300">{balance.toLocaleString('en-US', {minimumFractionDigits: 2})}</span>
               <span className="text-xs text-blue-300 ml-1">฿</span>
-              <button onClick={() => setIsWalletOpen(true)} className="ml-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold px-2.5 py-1 rounded-lg transition shadow-md shadow-cyan-500/20 cursor-pointer">
-                <i className="fa-solid fa-plus"></i> เติมเงิน
+              <button 
+                onClick={() => setIsWalletOpen(true)} 
+                className="ml-3 bg-cyan-500 hover:bg-cyan-400 text-slate-950 text-xs font-bold px-3 py-1.5 rounded-lg transition shadow-md shadow-cyan-500/20 cursor-pointer"
+              >
+                <i className="fa-solid fa-plus mr-1"></i> เติมเงิน
               </button>
             </div>
           </div>
@@ -213,13 +216,18 @@ export default function App() {
             <i className="fa-solid fa-gamepad text-cyan-400"></i> รายการเกมทั้งหมด
           </h2>
           <div className="flex gap-2 overflow-x-auto pb-2">
-            {['all', 'mobile', 'pc', 'giftcard'].map(cat => (
+            {[
+              { id: 'all', label: 'ทั้งหมด' },
+              { id: 'mobile', label: 'มือถือ' },
+              { id: 'pc', label: 'PC / Steam' },
+              { id: 'giftcard', label: 'บัตรเติมเงิน' }
+            ].map(cat => (
               <button 
-                key={cat}
-                onClick={() => setCategory(cat)}
-                className={`text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer ${category === cat ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20' : 'bg-[#0f193e] text-blue-200 hover:bg-[#152352] border border-blue-900/40'}`}
+                key={cat.id}
+                onClick={() => setCategory(cat.id)}
+                className={`text-xs font-semibold px-4 py-2 rounded-xl transition cursor-pointer ${category === cat.id ? 'bg-cyan-500 text-slate-950 shadow-lg shadow-cyan-500/20 font-bold' : 'bg-[#0f193e] text-blue-200 hover:bg-[#152352] border border-blue-900/40'}`}
               >
-                {cat === 'all' ? 'ทั้งหมด' : cat === 'mobile' ? 'มือถือ' : cat === 'pc' ? 'PC / Steam' : 'บัตรเติมเงิน'}
+                {cat.label}
               </button>
             ))}
           </div>
