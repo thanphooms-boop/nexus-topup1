@@ -2,6 +2,21 @@ import React, { useState } from 'react';
 
 const gamesData = [
   { 
+    id: 0, 
+    name: 'RoV (Realm of Valor)', 
+    category: 'mobile', 
+    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop&q=60', 
+    currency: 'คูปอง', 
+    packages: [
+      { id: 'rov1', name: '35 คูปอง', price: 35 }, 
+      { id: 'rov2', name: '175 คูปอง', price: 170 }, 
+      { id: 'rov3', name: '350 คูปอง', price: 340 }, 
+      { id: 'rov4', name: '875 คูปอง', price: 840 },
+      { id: 'rov5', name: '1,750 คูปอง', price: 1680 },
+      { id: 'rov6', name: 'Valor Pass (พรีเมียม)', price: 299 }
+    ] 
+  },
+  { 
     id: 1, 
     name: 'VALORANT', 
     category: 'pc', 
@@ -160,7 +175,7 @@ export default function App() {
     <div className="bg-[#070b19] text-blue-50 min-h-screen flex flex-col font-sans selection:bg-cyan-500 selection:text-black">
       
       {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-[#0a1128]/90 backdrop-blur-md border-b border-blue-900/40">
+      <nav className="sticky top-0 z-40 bg-[#0a1128]/90 backdrop-blur-md border-b border-blue-900/40">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           <div className="flex items-center space-x-3 cursor-pointer" onClick={() => setCategory('all')}>
             <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-cyan-500 to-blue-600 flex items-center justify-center shadow-lg shadow-cyan-500/30">
@@ -310,6 +325,23 @@ export default function App() {
         <p>&copy; 2026 NEXUS-TOPUP. All rights reserved. ระบบเติมเกมอัตโนมัติความเร็วสูง</p>
       </footer>
 
+      {/* LINE Contact Floating Button */}
+      <a
+        href="https://lin.ee/s5cebiI"
+        target="_blank"
+        rel="noopener noreferrer"
+        className="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-[#06C755] hover:bg-[#05b34c] text-white font-bold py-3 px-5 rounded-full shadow-lg transition-all duration-300 hover:scale-105 cursor-pointer"
+      >
+        <svg
+          className="w-6 h-6 fill-current"
+          viewBox="0 0 24 24"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.412-.105-.534-.283l-2.585-3.763v3.419c0 .348-.283.63-.63.63-.346 0-.627-.282-.627-.63V8.108c0-.27.174-.51.432-.596.066-.021.133-.031.2-.031.211 0 .411.105.533.283l2.585 3.764V8.108c0-.345.283-.63.63-.63.348 0 .63.285.63.63v4.771zm-7.647 0c0 .348-.283.63-.63.63-.346 0-.627-.282-.627-.63V8.108c0-.345.281-.63.627-.63.347 0 .63.285.63.63v4.771zm-3.15.63h-1.63c-.347 0-.628-.285-.628-.63V8.108c0-.345.281-.63.628-.63.347 0 .628.285.628.63v4.141h1.002c.347 0 .628.285.628.63 0 .345-.281.63-.628.63zM12 2C6.477 2 2 5.968 2 10.865c0 4.372 3.587 8.046 8.435 8.761.328.07.774.215.888.494.102.247.067.635.031.886-.057.393-.263 1.536-.296 1.864-.045.452.209.444.438.303.228-.142 3.635-2.14 4.962-2.919 1.488.358 3.055.545 4.632.545 5.523 0 10-3.968 10-8.865S17.523 2 12 2z"/>
+        </svg>
+        <span>คุยกับแอดมิน LINE</span>
+      </a>
+
       {/* Checkout Modal */}
       {isCheckoutOpen && selectedGame && (
         <div className="fixed inset-0 z-50 bg-[#050814]/85 backdrop-blur-sm flex items-center justify-center p-4">
@@ -331,7 +363,7 @@ export default function App() {
                   type="text" 
                   value={playerUid} 
                   onChange={(e) => setPlayerUid(e.target.value)}
-                  placeholder="กรอก UID หรือข้อมูลไอดีเกมของคุณ" 
+                  placeholder="กรอก Open ID / UID ของคุณ" 
                   className="w-full bg-[#070b19] border border-blue-900/60 rounded-xl px-4 py-2.5 text-sm text-blue-100 focus:outline-none focus:border-cyan-500" 
                 />
               </div>
