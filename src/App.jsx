@@ -601,12 +601,12 @@ export default function App() {
               {/* Total Summary & Confirm Button */}
               <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
                 <div>
-                  <span className="text-xs text-slate-400 block">ยอดรวมทั้งสิ้น</span>
+                  <span className="text-xs text-slate-400 block">ยอดชำระสุทธิ</span>
                   <span className="text-xl font-black text-cyan-400">{selectedPackage?.price} ฿</span>
                 </div>
                 <button 
-                  onClick={handleCheckout} 
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black px-6 py-3 rounded-xl text-sm transition-all shadow-lg shadow-cyan-500/25 cursor-pointer active:scale-95"
+                  onClick={handleCheckout}
+                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-cyan-500/25 cursor-pointer active:scale-95"
                 >
                   ยืนยันชำระเงิน
                 </button>
@@ -617,62 +617,41 @@ export default function App() {
         </div>
       )}
 
-      {/* Wallet Top-up Modal */}
+      {/* Wallet Modal */}
       {isWalletOpen && (
         <div className="fixed inset-0 z-50 bg-[#02050c]/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-md w-full p-6 sm:p-8 relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
+          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-sm w-full p-6 relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
             <button 
               onClick={() => setIsWalletOpen(false)} 
-              className="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors cursor-pointer text-lg font-bold w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center"
+              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors cursor-pointer text-sm font-bold"
             >
               ✕
             </button>
-
-            <h3 className="text-lg font-black mb-5 flex items-center gap-2 text-white">
-              <span>💳 เติมเงินเข้ากระเป๋า</span>
-            </h3>
-
+            <h3 className="font-black text-lg text-white mb-4">เติมเงินเข้ากระเป๋า</h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-xs font-bold text-slate-300 mb-2">เลือกจำนวนเงินที่ต้องการเติม</label>
-                <div className="grid grid-cols-3 gap-2">
-                  {[50, 100, 300, 500, 1000, 2000].map(amt => (
-                    <button 
-                      key={amt} 
-                      onClick={() => setWalletAmount(amt)}
-                      className={`py-2.5 rounded-xl text-sm font-bold border transition-all cursor-pointer ${walletAmount === amt ? 'border-cyan-400 bg-cyan-950/70 text-cyan-300 shadow-[0_0_10px_rgba(6,182,212,0.2)]' : 'bg-[#030712] border-slate-800 text-slate-300 hover:border-slate-700'}`}
+                <label className="block text-xs font-bold text-slate-200 mb-2">ระบุจำนวนเงิน (บาท)</label>
+                <div className="grid grid-cols-3 gap-2 mb-3">
+                  {[100, 300, 500, 1000, 2000, 5000].map((amount) => (
+                    <button
+                      key={amount}
+                      onClick={() => setWalletAmount(amount)}
+                      className={`py-2 text-xs font-bold rounded-xl border transition-all ${walletAmount === amount ? 'border-cyan-400 bg-cyan-950/70 text-cyan-300' : 'border-slate-800 bg-[#030712] text-slate-300'}`}
                     >
-                      {amt.toLocaleString()} ฿
+                      {amount} ฿
                     </button>
                   ))}
                 </div>
-              </div>
-
-              <div>
-                <label className="block text-xs font-bold text-slate-300 mb-1">หรือระบุจำนวนเงินเอง (บาท)</label>
                 <input 
                   type="number" 
-                  value={walletAmount} 
-                  onChange={(e) => setWalletAmount(parseFloat(e.target.value) || 0)}
-                  placeholder="เช่น 150" 
-                  className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-400 font-bold" 
+                  value={walletAmount}
+                  onChange={(e) => setWalletAmount(Number(e.target.value))}
+                  className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-400 font-mono"
                 />
               </div>
-
-              {/* Simulated QR Code */}
-              <div className="p-4 bg-[#030712] rounded-2xl border border-slate-800 text-center">
-                <p className="text-xs text-slate-400 mb-3">สแกน QR Code พร้อมเพย์เพื่อชำระเงิน (ระบบทดสอบ)</p>
-                <div className="w-36 h-36 bg-white mx-auto rounded-xl flex items-center justify-center p-2 mb-3 shadow-inner">
-                  <svg className="w-32 h-32 text-slate-950" viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M3 3h8v8H3zm2 2v4h4V5zm8-2h8v8h-8zm2 2v4h4V5zM3 13h8v8H3zm2 2v4h4v-4zm13-2h3v2h-3zm-3 0h2v3h-2zm3 3h3v5h-3zm-3 2h2v3h-2zm-3-5h2v2h-2zm0 3h2v2h-2z"/>
-                  </svg>
-                </div>
-                <span className="text-sm font-black text-cyan-400">ยอดชำระ: {walletAmount.toFixed(2)} บาท</span>
-              </div>
-
               <button 
-                onClick={handleWalletTopup} 
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg shadow-cyan-500/25 cursor-pointer active:scale-95"
+                onClick={handleWalletTopup}
+                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
               >
                 ยืนยันการเติมเงิน
               </button>
@@ -681,14 +660,18 @@ export default function App() {
         </div>
       )}
 
-      {/* Floating Toast Notification */}
-      <div className={`fixed bottom-6 left-6 z-50 transform transition-all duration-500 bg-[#070e24] border border-cyan-500/50 px-5 py-3.5 rounded-2xl shadow-[0_0_20px_rgba(6,182,212,0.3)] flex items-center gap-3 ${toast.show ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0 pointer-events-none'}`}>
-        <span className="text-xl">{toast.type === 'success' ? '✅' : '⚠️'}</span>
-        <div>
-          <p className="text-xs font-black text-white">{toast.title}</p>
-          <p className="text-xs text-slate-300">{toast.desc}</p>
+      {/* Toast Notification */}
+      {toast.show && (
+        <div className={`fixed bottom-6 left-6 z-50 border px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-bounce ${toast.type === 'error' ? 'bg-rose-950/90 border-rose-500 text-rose-200' : 'bg-[#070e24]/95 border-cyan-500 text-white'}`}>
+          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm ${toast.type === 'error' ? 'bg-rose-500/20 text-rose-400' : 'bg-cyan-500/20 text-cyan-400'}`}>
+            {toast.type === 'error' ? '!' : '✓'}
+          </div>
+          <div>
+            <p className="text-xs font-black">{toast.title}</p>
+            <p className="text-xs text-slate-300 mt-0.5">{toast.desc}</p>
+          </div>
         </div>
-      </div>
+      )}
 
     </div>
   );
