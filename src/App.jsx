@@ -5,7 +5,7 @@ const gamesData = [
     id: 0, 
     name: 'RoV (Realm of Valor)', 
     category: 'mobile', 
-    image: 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=500&auto=format&fit=crop&q=60', 
+    image: 'https://img.freepik.com/free-vector/gradient-esports-logo-design_23-2148967520.jpg?w=500', 
     currency: 'คูปอง', 
     packages: [
       { id: 'rov1', name: '35 คูปอง', price: 35 }, 
@@ -135,7 +135,7 @@ export default function App() {
 
   const handleCheckout = () => {
     if (!playerUid.trim()) {
-      showToast("แจ้งเตือน", "กรุณากรอก UID หรือข้อมูลไอดีเกมของคุณ", "error");
+      showToast("แจ้งเตือน", "กรุณากรอก OpenID หรือข้อมูลไอดีเกมของคุณ", "error");
       return;
     }
     if (balance < selectedPackage.price) {
@@ -221,7 +221,7 @@ export default function App() {
           <div className="relative z-10 max-w-xl">
             <span className="inline-block bg-cyan-500/10 text-cyan-400 border border-cyan-500/30 text-xs px-3 py-1 rounded-full font-medium mb-3">ระบบเติมเกมอัตโนมัติ 24 ชม.</span>
             <h1 className="text-3xl sm:text-4xl font-extrabold tracking-tight mb-3 text-white">เติมเกมสุดคุ้ม ปลอดภัย รวดเร็วทันใจ</h1>
-            <p className="text-blue-300/80 text-sm sm:text-base mb-6">รองรับ UID / Server ทุกเกมดัง พร้อมโปรโมชั่นส่วนลดพิเศษทุกสัปดาห์</p>
+            <p className="text-blue-300/80 text-sm sm:text-base mb-6">รองรับ OpenID / UID / Server ทุกเกมดัง พร้อมโปรโมชั่นส่วนลดพิเศษทุกสัปดาห์</p>
           </div>
         </div>
 
@@ -289,7 +289,7 @@ export default function App() {
                   <tr>
                     <th className="px-4 py-3">หมายเลขคำสั่งซื้อ</th>
                     <th className="px-4 py-3">เกม / แพ็กเกจ</th>
-                    <th className="px-4 py-3">UID / Server</th>
+                    <th className="px-4 py-3">OpenID / UID / Server</th>
                     <th className="px-4 py-3">ราคา</th>
                     <th className="px-4 py-3">สถานะ</th>
                     <th className="px-4 py-3">เวลา</th>
@@ -358,12 +358,14 @@ export default function App() {
             </div>
             <div className="space-y-4">
               <div>
-                <label className="block text-xs text-blue-300 mb-1">1. ข้อมูลผู้เล่น (UID / Server หรือ Email)</label>
+                <label className="block text-xs text-blue-300 mb-1">
+                  1. ข้อมูลผู้เล่น {selectedGame.id === 0 ? '(กรอก OpenID)' : '(UID / Server หรือ Email)'}
+                </label>
                 <input 
                   type="text" 
                   value={playerUid} 
                   onChange={(e) => setPlayerUid(e.target.value)}
-                  placeholder="กรอก Open ID / UID ของคุณ" 
+                  placeholder={selectedGame.id === 0 ? "กรอก OpenID เช่น 1234567890abcdef" : "กรอก Open ID / UID ของคุณ"} 
                   className="w-full bg-[#070b19] border border-blue-900/60 rounded-xl px-4 py-2.5 text-sm text-blue-100 focus:outline-none focus:border-cyan-500" 
                 />
               </div>
