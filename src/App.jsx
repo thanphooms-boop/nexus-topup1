@@ -87,7 +87,7 @@ const gamesData = [
   { 
     id: 0, 
     name: 'RoV (Realm of Valor)', 
-    category: 'mobile',
+    category: 'all', // ตั้งค่าเป็น 'all' เพื่อให้แสดงทุกตัวกรอง
     iconKey: 'rov',
     currency: 'คูปอง (Vouchers)', 
     idLabel: 'OpenID ของผู้เล่น (Garena / ROV)',
