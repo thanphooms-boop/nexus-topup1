@@ -1,26 +1,234 @@
 <!DOCTYPE html>
 <html lang="th">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>NEXUS-TOPUP | ระบบเติมเกมอัตโนมัติ</title>
-    <!-- Google Fonts: Prompt -->
-    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <!-- FontAwesome Icons -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Tailwind CSS Play CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MARVIEW HUB 🐷❤️</title>
     <style>
-      body {
-        font-family: 'Prompt', sans-serif;
-        background-color: #070b19;
-        color: #eff6ff;
-        margin: 0;
-      }
+        :root {
+            --pink-main: #ffb6c1;
+            --pink-dark: #d46a84;
+            --pink-bg: #fff0f5;
+            --black-lace: #2b1a1d;
+        }
+
+        body {
+            font-family: 'Kanit', sans-serif;
+            background-color: var(--pink-bg);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        /* Banner Header */
+        .banner {
+            background: linear-gradient(135deg, #ffc0cb, #ff69b4);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-bottom: 5px dashed var(--pink-dark);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+        }
+
+        .banner h1 {
+            margin: 0;
+            font-size: 2.2rem;
+            text-shadow: 2px 2px var(--black-lace);
+        }
+
+        /* Category & Tabs */
+        .nav-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 15px;
+            background-color: rgb(255, 255, 255);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            border: 2px solid var(--pink-dark);
+            background: white;
+            color: var(--pink-dark);
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .tab-btn.active, .tab-btn:hover {
+            background: var(--pink-dark);
+            color: white;
+        }
+
+        /* Product Grid */
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            padding: 0 15px;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: 15px;
+            border: 2px solid #ffe4e1;
+            padding: 12px;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .card img {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .card h3 {
+            font-size: 1.1rem;
+            margin: 10px 0 5px 0;
+            color: var(--black-lace);
+        }
+
+        .price {
+            color: var(--pink-dark);
+            font-weight: bold;
+            font-size: 1.2rem;
+            margin-bottom: 10px;
+        }
+
+        .buy-btn {
+            background-color: #06c755; /* LINE Color */
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: bold;
+            cursor: pointer;
+            width: 100%;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .buy-btn:hover {
+            background-color: #05b34c;
+        }
     </style>
-  </head>
-  <body class="bg-[#070b19] text-blue-50 min-h-screen">
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+</head>
+<body>
+
+    <div class="banner">
+        <h1>ร้าน MARVIEW HUB 🐷❤️</h1>
+        <p>ยินดีต้อนรับ! สั่งซื้อสินค้าผ่าน LINE OFFICECIAL ได้สะดวกรวดเร็ว</p>
+    </div>
+
+    <!-- ปุ่มเลือกหมวดหมู่ -->
+    <div class="nav-tabs">
+        <button class="tab-btn active" onclick="filterCategory('all')">ทั้งหมด</button>
+        <button class="tab-btn" onclick="filterCategory('sticker')">สติ๊กเกอร์ / ธีม</button>
+        <button class="tab-btn" onclick="filterCategory('clothes')">เสื้อผ้า</button>
+        <button class="tab-btn" onclick="filterCategory('kpop')">การ์ด K-Pop</button>
+        <button class="tab-btn" onclick="filterCategory('promo')">🔥 โปรโมชันพิเศษ</button>
+    </div>
+
+    <!-- รายการสินค้า -->
+    <div class="container">
+        <div class="grid" id="product-list">
+            <!-- สินค้าจะถูกโหลดผ่าน JavaScript -->
+        </div>
+    </div>
+
+    <script>
+        // Line ID ร้านค้า
+        const lineOaId = "155xsnsh"; 
+
+        // 📝 ข้อมูลสินค้า (สามารถเพิ่ม/แก้ไขรายการสินค้าตรงนี้ได้ตลอดเวลา)
+        const products = [
+            {
+                id: 1,
+                name: "สติ๊กเกอร์ Wish (50 เหรียญ)",
+                category: "sticker",
+                price: "35฿",
+                image: "https://via.placeholder.com/200?text=Sticker+Wish"
+            },
+            {
+                id: 2,
+                name: "เสื้อฮู้ดดี้เกาหลี Oversize",
+                category: "clothes",
+                price: "390฿",
+                image: "https://via.placeholder.com/200?text=K-Fashion"
+            },
+            {
+                id: 3,
+                name: "การ์ดแท้ NCT / AESPA (Random)",
+                category: "kpop",
+                price: "150฿",
+                image: "https://via.placeholder.com/200?text=K-Pop+Card"
+            },
+            {
+                id: 4,
+                name: "เซ็ตโปรโมชันสติ๊กเกอร์ 3 ชิ้น",
+                category: "promo",
+                price: "100฿",
+                image: "https://via.placeholder.com/200?text=Promotion+Set"
+            }
+        ];
+
+        // ฟังก์ชั่นแสดงรายการสินค้า
+        function displayProducts(items) {
+            const container = document.getElementById('product-list');
+            container.innerHTML = '';
+
+            items.forEach(item => {
+                // ข้อความที่จะส่งเข้า LINE อัตโนมัติเมื่อกดสั่งซื้อ
+                const lineMessage = encodeURIComponent(`สวัสดีค่ะ ต้องการสั่งซื้อสินค้า:\n- ${item.name}\n- ราคา: ${item.price}`);
+                const lineLink = `https://line.me/R/oaMessage/@${lineOaId}/?${lineMessage}`;
+
+                const cardHtml = `
+                    <div class="card">
+                        <img src="${item.image}" alt="${item.name}">
+                        <h3>${item.name}</h3>
+                        <div class="price">${item.price}</div>
+                        <a href="${lineLink}" target="_blank" class="buy-btn">💬 สั่งซื้อผ่าน LINE</a>
+                    </div>
+                `;
+                container.innerHTML += cardHtml;
+            });
+        }
+
+        // ฟังก์ชั่นกรองหมวดหมู่
+        function filterCategory(cat) {
+            // สลับสถานะปุ่ม active
+            const buttons = document.querySelectorAll('.tab-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            if (cat === 'all') {
+                displayProducts(products);
+            } else {
+                const filtered = products.filter(p => p.category === cat);
+                displayProducts(filtered);
+            }
+        }
+
+        // โหลดสินค้าทั้งหมดเมื่อเปิดหน้าเว็บ
+        displayProducts(products);
+    </script>
+</body>
 </html>
