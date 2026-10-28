@@ -87,7 +87,7 @@ const gamesData = [
   { 
     id: 0, 
     name: 'RoV (Realm of Valor)', 
-    category: 'mobile', 
+    category: 'mobile',
     iconKey: 'rov',
     currency: 'คูปอง (Vouchers)', 
     idLabel: 'OpenID ของผู้เล่น (Garena / ROV)',
@@ -235,7 +235,7 @@ export default function App() {
   };
 
   const filteredGames = gamesData.filter(game => {
-    const matchCategory = category === 'all' || game.category === category;
+    const matchCategory = category === 'all' || game.category === 'all' || game.category === category;
     const matchSearch = game.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchCategory && matchSearch;
   });
