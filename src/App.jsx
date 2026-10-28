@@ -87,7 +87,7 @@ const gamesData = [
   { 
     id: 0, 
     name: 'RoV (Realm of Valor)', 
-    category: 'all', // ตั้งค่าเป็น 'all' เพื่อให้แสดงทุกตัวกรอง
+    category: 'all', 
     iconKey: 'rov',
     currency: 'คูปอง (Vouchers)', 
     idLabel: 'OpenID ของผู้เล่น (Garena / ROV)',
@@ -216,17 +216,12 @@ export default function App() {
     }
   ]);
 
-  // Modal States
   const [isCheckoutOpen, setIsCheckoutOpen] = useState(false);
   const [isWalletOpen, setIsWalletOpen] = useState(false);
   const [selectedGame, setSelectedGame] = useState(null);
   const [selectedPackage, setSelectedPackage] = useState(null);
   const [playerUid, setPlayerUid] = useState('');
-
-  // Wallet Top-up State
   const [walletAmount, setWalletAmount] = useState(300);
-
-  // Toast State
   const [toast, setToast] = useState({ show: false, title: '', desc: '', type: 'success' });
 
   const showToast = (title, desc, type = 'success') => {
@@ -292,7 +287,6 @@ export default function App() {
       <nav className="sticky top-0 z-40 bg-[#070d1f]/90 backdrop-blur-md border-b border-cyan-500/20 shadow-[0_4px_20px_rgba(6,182,212,0.1)]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
           
-          {/* Brand Logo */}
           <div 
             className="flex items-center space-x-3 cursor-pointer group"
             onClick={() => { setCategory('all'); setSearchQuery(''); }}
@@ -310,10 +304,7 @@ export default function App() {
             </div>
           </div>
           
-          {/* Controls: Search & Wallet */}
           <div className="flex items-center space-x-4">
-            
-            {/* Search Input */}
             <div className="hidden md:flex items-center bg-[#0d1631] border border-cyan-900/60 rounded-full px-4 py-1.5 focus-within:border-cyan-400 transition-colors shadow-inner">
               <svg className="w-4 h-4 text-cyan-400/70 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
@@ -327,7 +318,6 @@ export default function App() {
               />
             </div>
 
-            {/* Wallet Balance Display */}
             <div className="flex items-center bg-[#0d1631] border border-cyan-500/30 rounded-xl px-3 py-1.5 shadow-[0_0_10px_rgba(6,182,212,0.15)]">
               <div className="flex flex-col text-right mr-3">
                 <span className="text-[10px] text-cyan-300/70 uppercase tracking-wider font-semibold">เครดิตคงเหลือ</span>
@@ -343,56 +333,35 @@ export default function App() {
                 <span>+ เติมเงิน</span>
               </button>
             </div>
-
           </div>
         </div>
       </nav>
 
       {/* Main Container */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-grow w-full">
-        
-        {/* Hero Cyber Banner */}
         <div className="relative rounded-3xl overflow-hidden bg-gradient-to-r from-blue-950 via-slate-900 to-[#070d1f] border border-cyan-500/30 mb-10 p-6 sm:p-10 shadow-[0_0_30px_rgba(6,182,212,0.15)]">
           <div className="absolute right-0 top-0 bottom-0 w-1/2 bg-[radial-gradient(ellipse_at_top_right,rgba(6,182,212,0.25),transparent_70%)] pointer-events-none"></div>
-          
           <div className="relative z-10 max-w-2xl">
             <div className="inline-flex items-center gap-2 bg-cyan-950/80 border border-cyan-500/40 rounded-full px-3 py-1 mb-4">
               <span className="w-2 h-2 rounded-full bg-cyan-400 animate-pulse"></span>
               <span className="text-xs font-bold text-cyan-300 tracking-wide">ระบบเติมเกมอัตโนมัติ 24 ชั่วโมง</span>
             </div>
-            
             <h1 className="text-3xl sm:text-5xl font-black tracking-tight mb-4 text-white leading-tight">
               เติมเกม <span className="bg-gradient-to-r from-yellow-400 via-amber-300 to-yellow-500 bg-clip-text text-transparent drop-shadow-[0_0_15px_rgba(234,179,8,0.4)]">RoV คูปอง</span> ราคาถูกที่สุด
             </h1>
-            
             <p className="text-slate-300 text-sm sm:text-base mb-6 leading-relaxed">
               รองรับระบบ OpenID ปลอดภัย ไม่ต้องใช้รหัสผ่าน คูปองเข้าไอดีทันทีภายใน 1-3 วินาที
             </p>
-
-            <div className="flex flex-wrap gap-4 text-xs font-semibold text-slate-400">
-              <div className="flex items-center gap-1.5 bg-[#0b142d] px-3 py-1.5 rounded-lg border border-slate-800">
-                <span className="text-emerald-400">✓</span> การันตีเงินเข้าเร็ว
-              </div>
-              <div className="flex items-center gap-1.5 bg-[#0b142d] px-3 py-1.5 rounded-lg border border-slate-800">
-                <span className="text-emerald-400">✓</span> ไม่ต้องใช้รหัสผ่าน
-              </div>
-              <div className="flex items-center gap-1.5 bg-[#0b142d] px-3 py-1.5 rounded-lg border border-slate-800">
-                <span className="text-emerald-400">✓</span> มีสลิปย้อนหลัง
-              </div>
-            </div>
           </div>
         </div>
 
-        {/* Section Header & Categories */}
+        {/* Categories */}
         <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 mb-8">
           <div>
             <h2 className="text-2xl font-black flex items-center gap-3 text-white tracking-wide">
               <span>🎮 เลือกเกมที่ต้องการเติม</span>
             </h2>
-            <p className="text-xs text-slate-400 mt-1">คลิกที่เกมเพื่อเลือกแพ็กเกจและทำรายการ</p>
           </div>
-
-          {/* Category Tabs */}
           <div className="flex gap-2 overflow-x-auto w-full md:w-auto pb-2 md:pb-0 scrollbar-none">
             {[
               { id: 'all', label: 'ทั้งหมด' },
@@ -403,7 +372,7 @@ export default function App() {
               <button 
                 key={cat.id}
                 onClick={() => setCategory(cat.id)}
-                className={`text-xs font-bold px-4 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${category === cat.id ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg shadow-cyan-500/25 scale-105' : 'bg-[#0d1631] text-slate-300 hover:bg-[#15234d] border border-cyan-900/30'}`}
+                className={`text-xs font-bold px-4 py-2.5 rounded-xl transition-all cursor-pointer whitespace-nowrap ${category === cat.id ? 'bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 shadow-lg scale-105' : 'bg-[#0d1631] text-slate-300 border border-cyan-900/30'}`}
               >
                 {cat.label}
               </button>
@@ -412,206 +381,72 @@ export default function App() {
         </div>
 
         {/* Game Cards Grid */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 gap-4 sm:gap-6">
-          {filteredGames.length === 0 ? (
-            <div className="col-span-full text-center py-16 bg-[#091126] rounded-2xl border border-dashed border-slate-800 text-slate-400">
-              ไม่พบรายการเกมที่คุณค้นหา
-            </div>
-          ) : (
-            filteredGames.map(game => (
-              <div 
-                key={game.id} 
-                onClick={() => handleOpenCheckout(game)}
-                className={`group bg-[#070e24] border rounded-2xl overflow-hidden hover:shadow-[0_0_25px_rgba(6,182,212,0.25)] transition-all duration-300 cursor-pointer flex flex-col relative ${game.id === 0 ? 'border-yellow-500/60 ring-1 ring-yellow-500/30' : 'border-cyan-900/40 hover:border-cyan-400'}`}
-              >
-                {/* RoV Badge */}
-                {game.id === 0 && (
-                  <div className="absolute top-3 right-3 z-20 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-lg">
-                    นิยมสูงสุด 🔥
-                  </div>
-                )}
-
-                <div className="h-44 overflow-hidden relative">
-                  {GameLogos[game.iconKey]}
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#070e24] via-transparent to-transparent"></div>
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+          {filteredGames.map(game => (
+            <div 
+              key={game.id} 
+              onClick={() => handleOpenCheckout(game)}
+              className={`group bg-[#070e24] border rounded-2xl overflow-hidden hover:shadow-[0_0_25px_rgba(6,182,212,0.25)] transition-all duration-300 cursor-pointer flex flex-col relative ${game.id === 0 ? 'border-yellow-500/60 ring-1 ring-yellow-500/30' : 'border-cyan-900/40 hover:border-cyan-400'}`}
+            >
+              {game.id === 0 && (
+                <div className="absolute top-3 right-3 z-20 bg-gradient-to-r from-yellow-500 to-amber-600 text-slate-950 font-black text-[10px] px-2.5 py-0.5 rounded-full shadow-lg">
+                  นิยมสูงสุด 🔥
                 </div>
-
-                <div className="p-4 flex flex-col flex-grow justify-between">
-                  <div>
-                    <h3 className="font-bold text-base text-white group-hover:text-cyan-300 transition-colors">{game.name}</h3>
-                    <p className="text-xs text-slate-400 mt-0.5">เติมผ่านระบบอัตโนมัติ</p>
-                  </div>
-                  
-                  <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
-                    <span className="text-xs font-bold text-cyan-400 group-hover:translate-x-1 transition-transform flex items-center gap-1">
-                      เติมทันที →
-                    </span>
-                    <span className="text-[10px] bg-cyan-950/80 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800/40 font-semibold">
-                      {game.currency}
-                    </span>
-                  </div>
+              )}
+              <div className="h-44 overflow-hidden relative">
+                {GameLogos[game.iconKey]}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#070e24] via-transparent to-transparent"></div>
+              </div>
+              <div className="p-4 flex flex-col flex-grow justify-between">
+                <div>
+                  <h3 className="font-bold text-base text-white group-hover:text-cyan-300 transition-colors">{game.name}</h3>
+                  <p className="text-xs text-slate-400 mt-0.5">เติมผ่านระบบอัตโนมัติ</p>
+                </div>
+                <div className="mt-4 pt-3 border-t border-slate-800/80 flex items-center justify-between">
+                  <span className="text-xs font-bold text-cyan-400 flex items-center gap-1">เติมทันที →</span>
+                  <span className="text-[10px] bg-cyan-950/80 text-cyan-300 px-2 py-0.5 rounded border border-cyan-800/40 font-semibold">{game.currency}</span>
                 </div>
               </div>
-            ))
-          )}
-        </div>
-
-        {/* Real-time Order History Table */}
-        <div className="mt-16">
-          <div className="flex items-center justify-between mb-4">
-            <h2 className="text-xl font-bold text-white flex items-center gap-2">
-              <span>📋 ประวัติการเติมเงินล่าสุด</span>
-            </h2>
-            <span className="text-xs text-slate-400">อัปเดตสถานะเรียลไทม์</span>
-          </div>
-
-          <div className="bg-[#070e24] border border-cyan-900/40 rounded-2xl overflow-hidden shadow-xl">
-            <div className="overflow-x-auto">
-              <table className="w-full text-left text-sm text-slate-200">
-                <thead className="bg-[#0c1635] text-xs uppercase text-cyan-400 border-b border-cyan-900/40">
-                  <tr>
-                    <th className="px-5 py-4">หมายเลขคำสั่งซื้อ</th>
-                    <th className="px-5 py-4">เกม / แพ็กเกจ</th>
-                    <th className="px-5 py-4">ข้อมูลผู้รับ (ID / OpenID)</th>
-                    <th className="px-5 py-4">ราคา</th>
-                    <th className="px-5 py-4">สถานะ</th>
-                    <th className="px-5 py-4">เวลา</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-slate-800/60">
-                  {orderHistory.length === 0 ? (
-                    <tr>
-                      <td colSpan="6" className="p-8 text-center text-slate-500 text-sm">ยังไม่มีประวัติทำรายการในขณะนี้</td>
-                    </tr>
-                  ) : (
-                    orderHistory.map(item => (
-                      <tr key={item.id} className="hover:bg-[#0c183d] transition-colors">
-                        <td className="px-5 py-4 font-mono text-xs font-semibold text-cyan-400">{item.id}</td>
-                        <td className="px-5 py-4">
-                          <span className="font-bold text-white block">{item.game}</span>
-                          <span className="text-xs text-slate-400">{item.pkg}</span>
-                        </td>
-                        <td className="px-5 py-4 font-mono text-xs text-slate-300">{item.uid}</td>
-                        <td className="px-5 py-4 font-bold text-cyan-300">{item.price} ฿</td>
-                        <td className="px-5 py-4">
-                          <span className="bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 text-[11px] px-3 py-1 rounded-full font-bold inline-flex items-center gap-1">
-                            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400"></span>
-                            {item.status}
-                          </span>
-                        </td>
-                        <td className="px-5 py-4 text-xs text-slate-400">{item.time}</td>
-                      </tr>
-                    ))
-                  )}
-                </tbody>
-              </table>
             </div>
-          </div>
+          ))}
         </div>
-
       </main>
-
-      {/* Footer */}
-      <footer className="bg-[#02050c] border-t border-cyan-900/30 mt-20 py-8 text-center text-sm text-slate-500">
-        <div className="max-w-7xl mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-black text-cyan-400">NEXUS-TOPUP</span>
-            <span>— ระบบเติมเกมอัตโนมัติปลอดภัย 100%</span>
-          </div>
-          <p>&copy; 2026 NEXUS-TOPUP. All rights reserved.</p>
-        </div>
-      </footer>
-
-      {/* LINE Official Floating Button */}
-      <a
-        href="https://lin.ee/s5cebiI"
-        target="_blank"
-        rel="noopener noreferrer"
-        className="fixed bottom-6 right-6 z-50 flex items-center gap-2.5 bg-[#06C755] hover:bg-[#05b34c] text-white font-black py-3 px-5 rounded-full shadow-[0_0_20px_rgba(6,199,85,0.4)] transition-all duration-300 hover:scale-105 active:scale-95 cursor-pointer"
-      >
-        <svg className="w-6 h-6 fill-current" viewBox="0 0 24 24">
-          <path d="M19.365 9.863c.349 0 .63.285.63.631 0 .345-.281.63-.63.63H17.61v1.125h1.755c.349 0 .63.283.63.63 0 .344-.281.629-.63.629h-2.386c-.345 0-.627-.285-.627-.629V8.108c0-.345.282-.63.63-.63h2.386c.346 0 .627.285.627.63 0 .349-.281.63-.63.63H17.61v1.125h1.755zm-3.855 3.016c0 .27-.174.51-.432.596-.064.021-.133.031-.199.031-.211 0-.412-.105-.534-.283l-2.585-3.763v3.419c0 .348-.283.63-.63.63-.346 0-.627-.282-.627-.63V8.108c0-.27.174-.51.432-.596.066-.021.133-.031.2-.031.211 0 .411.105.533.283l2.585 3.764V8.108c0-.345.283-.63.63-.63.348 0 .63.285.63.63v4.771zm-7.647 0c0 .348-.283.63-.63.63-.346 0-.627-.282-.627-.63V8.108c0-.345.281-.63.627-.63.347 0 .63.285.63.63v4.771zm-3.15.63h-1.63c-.347 0-.628-.285-.628-.63V8.108c0-.345.281-.63.628-.63.347 0 .628.285.628.63v4.141h1.002c.347 0 .628.285.628.63 0 .345-.281.63-.628.63zM12 2C6.477 2 2 5.968 2 10.865c0 4.372 3.587 8.046 8.435 8.761.328.07.774.215.888.494.102.247.067.635.031.886-.057.393-.263 1.536-.296 1.864-.045.452.209.444.438.303.228-.142 3.635-2.14 4.962-2.919 1.488.358 3.055.545 4.632.545 5.523 0 10-3.968 10-8.865S17.523 2 12 2z"/>
-        </svg>
-        <span className="text-sm">คุยกับแอดมิน LINE</span>
-      </a>
 
       {/* Checkout Modal */}
       {isCheckoutOpen && selectedGame && (
         <div className="fixed inset-0 z-50 bg-[#02050c]/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-lg w-full p-6 sm:p-8 relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
-            
-            <button 
-              onClick={() => setIsCheckoutOpen(false)} 
-              className="absolute top-5 right-5 text-slate-400 hover:text-white transition-colors cursor-pointer text-lg font-bold w-8 h-8 rounded-full bg-slate-800/50 flex items-center justify-center"
-            >
-              ✕
-            </button>
-
-            {/* Selected Game Banner Header */}
-            <div className="flex items-center gap-4 mb-6 pb-4 border-b border-slate-800">
-              <div className="w-14 h-14 rounded-2xl overflow-hidden flex-shrink-0 border border-cyan-500/30">
-                {GameLogos[selectedGame.iconKey]}
-              </div>
+          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-lg w-full p-6 relative">
+            <button onClick={() => setIsCheckoutOpen(false)} className="absolute top-5 right-5 text-slate-400 font-bold">✕</button>
+            <h3 className="font-black text-lg text-white mb-4">เติมเงิน: {selectedGame.name}</h3>
+            <div className="space-y-4">
               <div>
-                <h3 className="font-black text-lg text-white">{selectedGame.name}</h3>
-                <p className="text-xs text-cyan-400 font-medium">กรอกข้อมูลผู้ใช้และเลือกราคาแพ็กเกจ</p>
-              </div>
-            </div>
-
-            <div className="space-y-5">
-              
-              {/* Step 1: Account Input */}
-              <div>
-                <label className="block text-xs font-bold text-slate-200 mb-1.5">
-                  1. {selectedGame.idLabel} <span className="text-rose-400">*</span>
-                </label>
+                <label className="block text-xs font-bold text-slate-200 mb-1">{selectedGame.idLabel}</label>
                 <input 
                   type="text" 
                   value={playerUid} 
                   onChange={(e) => setPlayerUid(e.target.value)}
                   placeholder={selectedGame.idPlaceholder} 
-                  className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-3 text-sm text-slate-100 focus:outline-none focus:border-cyan-400 shadow-inner font-mono" 
+                  className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-3 text-sm text-slate-100 font-mono" 
                 />
-                {selectedGame.helpText && (
-                  <p className="text-[11px] text-cyan-400/80 mt-1.5 flex items-center gap-1">
-                    <span>💡</span> {selectedGame.helpText}
-                  </p>
-                )}
               </div>
-
-              {/* Step 2: Package Grid */}
               <div>
-                <label className="block text-xs font-bold text-slate-200 mb-2">
-                  2. เลือกแพ็กเกจเติมเงิน <span className="text-rose-400">*</span>
-                </label>
-                <div className="grid grid-cols-2 gap-2.5 max-h-60 overflow-y-auto pr-1">
+                <label className="block text-xs font-bold text-slate-200 mb-2">เลือกแพ็กเกจ</label>
+                <div className="grid grid-cols-2 gap-2 max-h-48 overflow-y-auto">
                   {selectedGame.packages.map((pkg) => (
                     <button 
                       key={pkg.id} 
                       onClick={() => setSelectedPackage(pkg)}
-                      className={`p-3.5 rounded-xl border text-left transition-all cursor-pointer ${selectedPackage?.id === pkg.id ? 'border-cyan-400 bg-cyan-950/70 text-cyan-300 shadow-[0_0_15px_rgba(6,182,212,0.2)] font-bold' : 'border-slate-800 bg-[#030712] text-slate-300 hover:border-slate-700'}`}
+                      className={`p-3 rounded-xl border text-left ${selectedPackage?.id === pkg.id ? 'border-cyan-400 bg-cyan-950/70 text-cyan-300' : 'border-slate-800 bg-[#030712] text-slate-300'}`}
                     >
-                      <div className="font-bold text-sm text-white">{pkg.name}</div>
+                      <div className="font-bold text-xs">{pkg.name}</div>
                       <div className="text-xs font-extrabold text-cyan-400 mt-1">{pkg.price} ฿</div>
                     </button>
                   ))}
                 </div>
               </div>
-
-              {/* Total Summary & Confirm Button */}
-              <div className="pt-4 border-t border-slate-800 flex items-center justify-between">
-                <div>
-                  <span className="text-xs text-slate-400 block">ยอดชำระสุทธิ</span>
-                  <span className="text-xl font-black text-cyan-400">{selectedPackage?.price} ฿</span>
-                </div>
-                <button 
-                  onClick={handleCheckout}
-                  className="bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black px-6 py-3.5 rounded-xl transition-all shadow-lg shadow-cyan-500/25 cursor-pointer active:scale-95"
-                >
-                  ยืนยันชำระเงิน
-                </button>
-              </div>
-
+              <button onClick={handleCheckout} className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black py-3 rounded-xl mt-4">
+                ยืนยันชำระเงิน ({selectedPackage?.price} ฿)
+              </button>
             </div>
           </div>
         </div>
@@ -620,59 +455,23 @@ export default function App() {
       {/* Wallet Modal */}
       {isWalletOpen && (
         <div className="fixed inset-0 z-50 bg-[#02050c]/85 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-sm w-full p-6 relative shadow-[0_0_50px_rgba(6,182,212,0.2)]">
-            <button 
-              onClick={() => setIsWalletOpen(false)} 
-              className="absolute top-4 right-4 text-slate-400 hover:text-white transition-colors cursor-pointer text-sm font-bold"
-            >
-              ✕
-            </button>
+          <div className="bg-[#070e24] border border-cyan-500/40 rounded-3xl max-w-sm w-full p-6 relative">
+            <button onClick={() => setIsWalletOpen(false)} className="absolute top-4 right-4 text-slate-400 font-bold">✕</button>
             <h3 className="font-black text-lg text-white mb-4">เติมเงินเข้ากระเป๋า</h3>
             <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-bold text-slate-200 mb-2">ระบุจำนวนเงิน (บาท)</label>
-                <div className="grid grid-cols-3 gap-2 mb-3">
-                  {[100, 300, 500, 1000, 2000, 5000].map((amount) => (
-                    <button
-                      key={amount}
-                      onClick={() => setWalletAmount(amount)}
-                      className={`py-2 text-xs font-bold rounded-xl border transition-all ${walletAmount === amount ? 'border-cyan-400 bg-cyan-950/70 text-cyan-300' : 'border-slate-800 bg-[#030712] text-slate-300'}`}
-                    >
-                      {amount} ฿
-                    </button>
-                  ))}
-                </div>
-                <input 
-                  type="number" 
-                  value={walletAmount}
-                  onChange={(e) => setWalletAmount(Number(e.target.value))}
-                  className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-2.5 text-sm text-slate-100 focus:outline-none focus:border-cyan-400 font-mono"
-                />
-              </div>
-              <button 
-                onClick={handleWalletTopup}
-                className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 hover:from-cyan-400 hover:to-blue-500 text-slate-950 font-black py-3 rounded-xl transition-all shadow-lg shadow-cyan-500/25 cursor-pointer"
-              >
+              <input 
+                type="number" 
+                value={walletAmount}
+                onChange={(e) => setWalletAmount(Number(e.target.value))}
+                className="w-full bg-[#030712] border border-cyan-900/60 rounded-xl px-4 py-2.5 text-sm text-slate-100 font-mono"
+              />
+              <button onClick={handleWalletTopup} className="w-full bg-gradient-to-r from-cyan-500 to-blue-600 text-slate-950 font-black py-3 rounded-xl">
                 ยืนยันการเติมเงิน
               </button>
             </div>
           </div>
         </div>
       )}
-
-      {/* Toast Notification */}
-      {toast.show && (
-        <div className={`fixed bottom-6 left-6 z-50 border px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 animate-bounce ${toast.type === 'error' ? 'bg-rose-950/90 border-rose-500 text-rose-200' : 'bg-[#070e24]/95 border-cyan-500 text-white'}`}>
-          <div className={`w-8 h-8 rounded-xl flex items-center justify-center font-bold text-sm ${toast.type === 'error' ? 'bg-rose-500/20 text-rose-400' : 'bg-cyan-500/20 text-cyan-400'}`}>
-            {toast.type === 'error' ? '!' : '✓'}
-          </div>
-          <div>
-            <p className="text-xs font-black">{toast.title}</p>
-            <p className="text-xs text-slate-300 mt-0.5">{toast.desc}</p>
-          </div>
-        </div>
-      )}
-
     </div>
   );
 }
